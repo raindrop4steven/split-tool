@@ -1,0 +1,278 @@
+" #################### Common Settings #####################
+set nocompatible
+filetype off
+
+" #################### Plugins #####################
+call plug#begin('~/.vim/plugged')
+
+" Jedi-vim
+Plug 'davidhalter/jedi-vim'
+
+" CtrlP
+Plug 'ctrlpvim/ctrlp.vim'
+
+" ctrlfs
+Plug 'dyng/ctrlsf.vim'
+
+" ctrlspace
+Plug 'szw/vim-ctrlspace'
+
+" rainbow_parentheses
+Plug 'kien/rainbow_parentheses.vim'
+
+" 自动补全单引号，双引号等
+Plug 'Raimondi/delimitMate'
+
+" 自动补全html/xml标签
+Plug 'docunext/closetag.vim'
+
+" syntastic
+Plug 'scrooloose/syntastic'
+
+" nerdtree nerdtreetabs
+Plug 'scrooloose/nerdtree'
+
+" tagbar
+Plug 'majutsushi/tagbar'
+
+" SuperTab
+Plug 'ervandew/supertab'
+call plug#end()
+
+" Jedi-vim {{
+    " Use splits to show definitions
+    let g:jedi#use_splits_not_buffers = "top"
+    " Show function call signatures in pop-up buffer
+    let g:jedi#show_call_signatures = "1"" }}
+
+" ctrlp ctrlpfunky{{{
+    let g:ctrlp_map = '<leader>p'
+    let g:ctrlp_cmd = 'CtrlP'
+    map <leader>f :CtrlPMRU<CR>
+    let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+        \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+        \ }
+    let g:ctrlp_working_path_mode=0
+    let g:ctrlp_match_window_bottom=1
+    let g:ctrlp_max_height=15
+    let g:ctrlp_match_window_reversed=0
+    let g:ctrlp_mruf_max=500
+    let g:ctrlp_follow_symlinks=1
+    " 如果安装了ag, 使用ag
+    " if executable('ag')
+    " " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    " " ag is fast enough that CtrlP doesn't need to cache
+    " let g:ctrlp_use_caching = 0
+    " endif
+" }}}
+
+" ctrlsf {{{
+    nmap \ <Plug>CtrlSFCwordPath<CR>
+    " let g:ctrlsf_position = 'below'
+    " let g:ctrlsf_winsize = '30%'
+    let g:ctrlsf_auto_close = 0
+    let g:ctrlsf_confirm_save = 0
+    " Note: cannot use <CR> or <C-m> for open
+    " Use : <sapce> or <tab>
+    let g:ctrlsf_mapping = {
+        \ "open"  : "<Space>",
+        \ "openb" : "O",
+        \ "tab"   : "t",
+        \ "tabb"  : "T",
+        \ "prevw" : "p",
+        \ "quit"  : "q",
+        \ "next"  : "<C-J>",
+        \ "prev"  : "<C-K>",
+        \ "pquit" : "q",
+        \ }
+" }}}
+
+" rainbow_parentheses {{{
+    " 不加入这行, 防止黑色括号出现, 很难识别
+    " \ ['black',       'SeaGreen3'],
+    let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['gray',        'RoyalBlue3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+
+    let g:rbpt_max = 16
+    let g:rbpt_loadcmd_toggle = 0
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+" }}}
+
+" delimitMate {{{
+    " for python docstring ",优化输入
+    au FileType python let b:delimitMate_nesting_quotes = ['"']
+    au FileType php let delimitMate_matchpairs = "(:),[:],{:}"
+    " 关闭某些类型文件的自动补全
+    "au FileType mail let b:delimitMate_autoclose = 0
+" }}}
+
+" closetag {{{
+    let g:closetag_html_style=1
+" }}}
+
+" syntastic {{{
+    " dependence
+    " 1. shellcheck `brew install shellcheck` https://github.com/koalaman/shellcheck
+
+    let g:syntastic_error_symbol='>>'
+    let g:syntastic_warning_symbol='>'
+    let g:syntastic_check_on_open=1
+    let g:syntastic_check_on_wq=0
+    let g:syntastic_enable_highlighting=1
+
+    " checkers
+    " 最轻量
+    " let g:syntastic_python_checkers=['pyflakes'] " 使用pyflakes
+    " 中等
+    " error code: http://pep8.readthedocs.org/en/latest/intro.html#error-codes
+    let g:syntastic_python_checkers=['pyflakes', 'pep8'] " 使用pyflakes,速度比pylint快
+    let g:syntastic_python_pep8_args='--ignore=E501,E225,E124,E712'
+    " 重量级, 但是足够强大, 定制完成后相当个性化
+    " pylint codes: http://pylint-messages.wikidot.com/all-codes
+    " let g:syntastic_python_checkers=['pyflakes', 'pylint'] " 使用pyflakes,速度比pylint快
+    " let g:syntastic_python_checkers=['pylint'] " 使用pyflakes,速度比pylint快
+    " let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
+
+    " if js
+    " let g:syntastic_javascript_checkers = ['jsl', 'jshint']
+    " let g:syntastic_html_checkers=['tidy', 'jshint']
+
+    " to see error location list
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_enable_signs = 1
+    let g:syntastic_auto_loc_list = 0
+    let g:syntastic_auto_jump = 0
+    let g:syntastic_loc_list_height = 5
+
+    function! ToggleErrors()
+        let old_last_winnr = winnr('$')
+        lclose
+        if old_last_winnr == winnr('$')
+            " Nothing was closed, open syntastic_error location panel
+            Errors
+        endif
+    endfunction
+    nnoremap <Leader>s :call ToggleErrors()<cr>
+
+    " ,en ,ep to jump between errors
+    function! <SID>LocationPrevious()
+    try
+        lprev
+    catch /^Vim\%((\a\+)\)\=:E553/
+        llast
+    endtry
+    endfunction
+
+    function! <SID>LocationNext()
+    try
+        lnext
+    catch /^Vim\%((\a\+)\)\=:E553/
+        lfirst
+    endtry
+    endfunction
+
+    nnoremap <silent> <Plug>LocationPrevious    :<C-u>exe 'call <SID>LocationPrevious()'<CR>
+    nnoremap <silent> <Plug>LocationNext        :<C-u>exe 'call <SID>LocationNext()'<CR>
+    nmap <silent> <Leader>ep    <Plug>LocationPrevious
+    nmap <silent> <Leader>en    <Plug>LocationNext
+
+    " 修改高亮的背景色, 适应主题
+    highlight SyntasticErrorSign guifg=white guibg=black
+
+    " 禁止插件检查java
+    " thanks to @marsqing, see https://github.com/wklken/k-vim/issues/164
+    let g:syntastic_mode_map = {'mode': 'active', 'passive_filetypes': ['java'] }
+" }}}
+
+" nerdtree nerdtreetabs {{{
+    map <leader>m :NERDTreeToggle<CR>
+    let NERDTreeHighlightCursorline=1
+    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+    "close vim if the only window left open is a NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    " s/v 分屏打开文件
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+
+
+    " nerdtreetabs
+    map <Leader>n <plug>NERDTreeTabsToggle<CR>
+    " 关闭同步
+    let g:nerdtree_tabs_synchronize_view=0
+    let g:nerdtree_tabs_synchronize_focus=0
+    " 是否自动开启nerdtree
+    " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
+    let g:nerdtree_tabs_open_on_console_startup=0
+    let g:nerdtree_tabs_open_on_gui_startup=0
+" }}}
+
+" 标签导航
+" tagbar {{{
+    nmap <F9> :TagbarToggle<CR>
+    let g:tagbar_autofocus = 1
+    " let g:tagbar_autoshowtag = 1
+    " let g:tagbar_show_visibility = 1
+    " for ruby
+    let g:tagbar_type_ruby = {
+        \ 'kinds' : [
+            \ 'm:modules',
+            \ 'c:classes',
+            \ 'd:describes',
+            \ 'C:contexts',
+            \ 'f:methods',
+            \ 'F:singleton methods'
+        \ ]
+    \ }
+
+    " go语言的tagbar配置
+    " 1. install gotags 'go get -u github.com/jstemmer/gotags'
+    " 2. make sure `gotags` in you shell PATH, you can call check it with `which gotags`
+    " for gotags. work with tagbar
+    let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+        \ ],
+        \ 'sro' : '.',
+        \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+        \ },
+        \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+        \ },
+        \ 'ctagsbin'  : 'gotags',
+        \ 'ctagsargs' : '-sort -silent'
+    \ }
+" }}}
