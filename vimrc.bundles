@@ -39,11 +39,10 @@ Plug 'majutsushi/tagbar'
 Plug 'ervandew/supertab'
 call plug#end()
 
-" Jedi-vim {{
+" Jedi-vim {{{
     " Use splits to show definitions
     let g:jedi#use_splits_not_buffers = "top"
-    " Show function call signatures in pop-up buffer
-    let g:jedi#show_call_signatures = "1"" }}
+"}}}
 
 " ctrlp ctrlpfunky{{{
     let g:ctrlp_map = '<leader>p'
