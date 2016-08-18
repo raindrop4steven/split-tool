@@ -37,6 +37,9 @@ Plug 'majutsushi/tagbar'
 
 " SuperTab
 Plug 'ervandew/supertab'
+
+" CSAProxy
+Plug 'godlygeek/csapprox'
 call plug#end()
 
 " Jedi-vim {{{
