@@ -10,13 +10,13 @@ git clone https://github.com/raindrop4steven/v-vim.git
 ### 2. 安装依赖包
 
 
-##### 2.1 系统依赖 # ctags, ag(the_silver_searcher)
+##### 2.1 系统依赖
 
 ```
 # ubuntu
 sudo apt-get install ctags
 sudo apt-get install build-essential cmake python-dev  #编译YCM自动补全插件依赖
-sudo apt-get install silversearcher-ag
+sudo apt-get install ack-grep
 
 # centos
 sudo yum install python-devel.x86_64

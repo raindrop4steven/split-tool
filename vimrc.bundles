@@ -40,6 +40,9 @@ Plug 'ervandew/supertab'
 
 " CSAProxy
 Plug 'godlygeek/csapprox'
+
+" Ag
+Plug 'mileszs/ack.vim'
 call plug#end()
 
 " Jedi-vim {{{
