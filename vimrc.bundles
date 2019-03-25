@@ -289,3 +289,7 @@ call plug#end()
         \ 'ctagsargs' : '-sort -silent'
     \ }
 " }}}
+
+" ack {{{
+    map <Leader>c :Ack<Space> 
+" }}}
