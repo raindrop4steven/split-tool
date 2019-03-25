@@ -46,6 +46,11 @@ Plug 'mileszs/ack.vim'
 
 " vim-fugitive
 Plug 'tpope/vim-fugitive'
+
+" indent
+Plug 'Yggdroot/indentLine'
+
+Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()
 
 " Jedi-vim {{{
