@@ -14,17 +14,11 @@ Plug 'ctrlpvim/ctrlp.vim'
 " ctrlfs
 Plug 'dyng/ctrlsf.vim'
 
-" ctrlspace
-Plug 'szw/vim-ctrlspace'
-
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
 
 " 自动补全单引号，双引号等
 Plug 'Raimondi/delimitMate'
-
-" 自动补全html/xml标签
-Plug 'docunext/closetag.vim'
 
 " syntastic
 Plug 'scrooloose/syntastic'
