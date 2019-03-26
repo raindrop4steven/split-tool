@@ -45,6 +45,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 
 Plug 'Vimjas/vim-python-pep8-indent'
+
 call plug#end()
 
 " Jedi-vim {{{
